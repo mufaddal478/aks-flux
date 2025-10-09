@@ -10,3 +10,4 @@ spec:
     kind: GitRepository
     name: flux-system
   path: ./clusters/aks-demo-cluster/apps
+  timeout: 2m
