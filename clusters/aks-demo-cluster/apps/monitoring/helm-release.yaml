@@ -26,32 +26,32 @@ spec:
         podMonitorSelectorNilUsesHelmValues: false
 	
 	resources:
-          requests:
-            cpu: 100m
-            memory: 512Mi
-          limits:
-            cpu: 500m
-            memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
         
-        # Resource limits for the config-reloader and init containers
-        initContainers:
-          - name: init-config-reloader
-            resources:
-              requests:
-                cpu: 5m
-                memory: 10Mi
-              limits:
-                cpu: 50m
-                memory: 50Mi
+    # Resource limits for the config-reloader and init containers
+    initContainers:
+      - name: init-config-reloader
+        resources:
+          requests:
+            cpu: 5m
+            memory: 10Mi
+          limits:
+            cpu: 50m
+            memory: 50Mi
         
         # This is for the config-reloader sidecar (in the main prometheus pod)
-        containers:
-          - name: config-reloader
-            resources:
-              requests:
-                cpu: 5m
-                memory: 10Mi
-              limits:
-                cpu: 50m
-                memory: 50Mi
+    containers:
+      - name: config-reloader
+        resources:
+          requests:
+            cpu: 5m
+            memory: 10Mi
+          limits:
+            cpu: 50m
+            memory: 50Mi
 
