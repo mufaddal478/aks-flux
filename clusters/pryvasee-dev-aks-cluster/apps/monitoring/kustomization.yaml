@@ -4,4 +4,5 @@ resources:
   - helm-repo.yaml
   - helm-release.yaml
   - monitoring-namespace.yaml
+  - rbac.yaml
 
