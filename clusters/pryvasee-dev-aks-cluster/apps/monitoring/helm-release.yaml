@@ -4,7 +4,7 @@ metadata:
   name: kube-prometheus-stack
   namespace: monitoring
   annotations:
-    clusterconfig.azure.com/use-managed-source: "true"  # ← Add this line
+    clusterconfig.azure.com/use-managed-source: "true"
 spec:
   interval: 5m
   releaseName: kube-prometheus-stack
@@ -16,14 +16,14 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-
   values:
     grafana:
       adminUser: admin
-      adminPassword: admin123
+      # WARNING: Using hardcoded passwords is not recommended for production. 
+      # Consider using Kubernetes Secrets for sensitive data.
+      adminPassword: admin123 
       service:
         type: LoadBalancer
-
     prometheus:
       prometheusSpec:
         serviceMonitorSelectorNilUsesHelmValues: false
@@ -35,8 +35,8 @@ spec:
           limits:
             cpu: 500m
             memory: 1Gi
-
-        # Resource limits for the config-reloader and init containers
+        
+        # Resource limits for the config-reloader init containers
         initContainers:
           - name: init-config-reloader
             resources:
@@ -46,8 +46,8 @@ spec:
               limits:
                 cpu: 50m
                 memory: 50Mi
-
-        # This is for the config-reloader sidecar (in the main prometheus pod)
+        
+        # Resource limits for the config-reloader sidecar (in the main prometheus pod)
         containers:
           - name: config-reloader
             resources:
