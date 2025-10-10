@@ -11,16 +11,14 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: "66.*" # adjust if you want a specific version
+      version: "66.*"
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
-        namespace: flux-system
+        namespace: monitoring
   values:
     grafana:
       adminUser: admin
-      # WARNING: Using hardcoded passwords is not recommended for production. 
-      # Consider using Kubernetes Secrets for sensitive data.
       adminPassword: admin123 
       service:
         type: LoadBalancer
@@ -35,8 +33,6 @@ spec:
           limits:
             cpu: 500m
             memory: 1Gi
-        
-        # Resource limits for the config-reloader init containers
         initContainers:
           - name: init-config-reloader
             resources:
@@ -46,8 +42,6 @@ spec:
               limits:
                 cpu: 50m
                 memory: 50Mi
-        
-        # Resource limits for the config-reloader sidecar (in the main prometheus pod)
         containers:
           - name: config-reloader
             resources:
