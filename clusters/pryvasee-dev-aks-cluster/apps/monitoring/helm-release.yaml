@@ -3,8 +3,6 @@ kind: HelmRelease
 metadata:
   name: kube-prometheus-stack
   namespace: monitoring
-  annotations:
-    clusterconfig.azure.com/use-managed-source: "true"
 spec:
   interval: 5m
   releaseName: kube-prometheus-stack
