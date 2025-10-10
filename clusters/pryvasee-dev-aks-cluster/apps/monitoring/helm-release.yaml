@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 5m
+  releaseName: kube-prometheus-stack
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: "66.*" # adjust if you want a specific version
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+
+  values:
+    grafana:
+      adminUser: admin
+      adminPassword: admin123
+      service:
+        type: LoadBalancer
+
+    prometheus:
+      prometheusSpec:
+        serviceMonitorSelectorNilUsesHelmValues: false
+        podMonitorSelectorNilUsesHelmValues: false
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 1Gi
+
+        # Resource limits for the config-reloader and init containers
+        initContainers:
+          - name: init-config-reloader
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                cpu: 50m
+                memory: 50Mi
+
+        # This is for the config-reloader sidecar (in the main prometheus pod)
+        containers:
+          - name: config-reloader
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                cpu: 50m
+                memory: 50Mi
