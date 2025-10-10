@@ -9,5 +9,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./clusters/aks-demo-cluster/apps
+  path: ./clusters/pryvasee-dev-aks-cluster/apps
   timeout: 2m
