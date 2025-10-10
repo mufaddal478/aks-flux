@@ -13,9 +13,9 @@ spec:
       chart: kube-prometheus-stack
       version: "66.*"
       sourceRef:
-        kind: GitRepository                           # ✅ Changed from HelmRepository
-        name: flux-config-pryvasee-dev-aks-cluster   # ✅ Changed from prometheus-community
-        namespace: flux-system
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: monitoring
   values:
     grafana:
       adminUser: admin
